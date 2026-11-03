@@ -1,0 +1,247 @@
+@import "tailwindcss";
+
+/* ───────────────────────── Design tokens ───────────────────────── */
+@theme {
+  --color-ivory: #fff9ed;
+  --color-cream: #f8ebd5;
+  --color-cream-deep: #f1dfc0;
+  --color-maroon: #791f2b;
+  --color-burgundy: #641b28;
+  --color-wine: #4a121c;
+  --color-gold: #c49a48;
+  --color-gold-deep: #a57c32;
+  --color-champagne: #d9b875;
+  --color-brown: #39251f;
+  --color-muted: #78645a;
+
+  --font-serif: "Cormorant Garamond", "Playfair Display", Georgia, "Times New Roman", serif;
+  --font-sans: "Lato", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --font-deva: "Noto Serif Devanagari", "Mangal", serif;
+
+  --shadow-card: 0 1px 0 rgb(255 255 255 / 0.7) inset, 0 18px 40px -22px rgb(57 37 31 / 0.35),
+    0 2px 6px -2px rgb(57 37 31 / 0.08);
+  --shadow-glow: 0 0 0 1px rgb(196 154 72 / 0.35), 0 10px 30px -10px rgb(121 31 43 / 0.45);
+
+  --animate-shimmer: shimmer 3.2s ease-in-out infinite;
+  --animate-spin-slow: spin 140s linear infinite;
+  --animate-swing: swing 4.5s ease-in-out infinite;
+  --animate-float: float 6s ease-in-out infinite;
+
+  @keyframes shimmer {
+    0% { transform: translateX(-120%) skewX(-18deg); }
+    55%, 100% { transform: translateX(220%) skewX(-18deg); }
+  }
+  @keyframes swing {
+    0%, 100% { transform: rotate(4deg); }
+    50% { transform: rotate(-4deg); }
+  }
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-6px); }
+  }
+}
+
+/* ───────────────────────── Base ───────────────────────── */
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+    scroll-behavior: smooth;
+    scroll-padding-top: 5.5rem;
+  }
+
+  body {
+    @apply bg-ivory font-sans text-brown antialiased;
+    overflow-x: hidden;
+    text-rendering: optimizeLegibility;
+  }
+
+  ::selection {
+    background: rgb(196 154 72 / 0.35);
+    color: var(--color-wine);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-gold);
+    outline-offset: 3px;
+    border-radius: 6px;
+  }
+
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+}
+
+/* ───────────────────────── Components ───────────────────────── */
+@layer components {
+  .container-wedding {
+    @apply mx-auto w-full max-w-[1200px] px-5 sm:px-8;
+  }
+
+  .section-pad {
+    @apply py-20 sm:py-24 lg:py-28;
+  }
+
+  /* Small letter-spaced label above headings */
+  .eyebrow {
+    @apply font-sans text-[0.7rem] font-bold uppercase tracking-[0.32em] text-gold-deep sm:text-xs;
+  }
+
+  .heading-display {
+    @apply font-serif font-semibold uppercase leading-[1.1] tracking-[0.08em] text-maroon;
+    font-size: clamp(1.75rem, 1.2rem + 2.4vw, 3rem);
+  }
+
+  .text-deva {
+    font-family: var(--font-deva);
+    letter-spacing: 0;
+  }
+
+  /* Paper texture background (pure CSS — no image request) */
+  .bg-paper {
+    background-color: var(--color-ivory);
+    background-image:
+      radial-gradient(circle at 15% 10%, rgb(217 184 117 / 0.16), transparent 40%),
+      radial-gradient(circle at 85% 90%, rgb(217 184 117 / 0.14), transparent 45%),
+      radial-gradient(rgb(120 100 90 / 0.05) 1px, transparent 1px);
+    background-size: auto, auto, 22px 22px;
+  }
+
+  .bg-cream-paper {
+    background-color: var(--color-cream);
+    background-image:
+      radial-gradient(circle at 80% 0%, rgb(255 249 237 / 0.7), transparent 50%),
+      radial-gradient(rgb(120 100 90 / 0.06) 1px, transparent 1px);
+    background-size: auto, 20px 20px;
+  }
+
+  .bg-royal {
+    background-color: var(--color-burgundy);
+    background-image:
+      radial-gradient(ellipse at 50% -10%, rgb(196 154 72 / 0.28), transparent 55%),
+      radial-gradient(ellipse at 50% 120%, rgb(74 18 28 / 0.9), transparent 60%),
+      linear-gradient(160deg, #7d2230 0%, #641b28 45%, #4a121c 100%);
+  }
+
+  /* Gold gradient text */
+  .text-gold-gradient {
+    background: linear-gradient(100deg, #a57c32 0%, #d9b875 30%, #f3dfae 50%, #c49a48 70%, #a57c32 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  /* Buttons — min height 48px for comfortable tapping */
+  .btn {
+    @apply relative inline-flex min-h-12 items-center justify-center gap-2.5 overflow-hidden rounded-full px-6 py-3 font-sans text-[0.78rem] font-bold uppercase tracking-[0.18em] transition-all duration-300 select-none sm:px-7;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .btn:active {
+    transform: scale(0.97);
+  }
+
+  .btn-primary {
+    @apply text-ivory;
+    background: linear-gradient(135deg, #8a2533 0%, #791f2b 45%, #5a1723 100%);
+    box-shadow: var(--shadow-glow), inset 0 1px 0 rgb(255 255 255 / 0.15);
+    border: 1px solid rgb(217 184 117 / 0.7);
+  }
+  .btn-primary:hover {
+    box-shadow: 0 0 0 1px rgb(217 184 117 / 0.9), 0 16px 34px -12px rgb(121 31 43 / 0.6);
+    transform: translateY(-2px);
+  }
+
+  .btn-gold {
+    @apply text-wine;
+    background: linear-gradient(135deg, #e7cd93 0%, #d9b875 35%, #c49a48 100%);
+    border: 1px solid rgb(165 124 50 / 0.6);
+    box-shadow: 0 10px 26px -12px rgb(165 124 50 / 0.7), inset 0 1px 0 rgb(255 255 255 / 0.45);
+  }
+  .btn-gold:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 16px 32px -12px rgb(165 124 50 / 0.8), inset 0 1px 0 rgb(255 255 255 / 0.5);
+  }
+
+  .btn-outline {
+    @apply border border-gold/70 bg-ivory/60 text-maroon backdrop-blur-sm;
+  }
+  .btn-outline:hover {
+    @apply border-maroon bg-maroon text-ivory;
+  }
+
+  .btn-outline-light {
+    @apply border border-champagne/60 bg-white/5 text-champagne;
+  }
+  .btn-outline-light:hover {
+    @apply border-champagne bg-champagne text-wine;
+  }
+
+  /* Shimmer sweep used on primary CTAs */
+  .shimmer::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    width: 40%;
+    background: linear-gradient(90deg, transparent, rgb(255 255 255 / 0.35), transparent);
+    animation: var(--animate-shimmer);
+    pointer-events: none;
+  }
+
+  /* Double gold frame like a printed card */
+  .gold-frame {
+    position: relative;
+    border: 1px solid rgb(196 154 72 / 0.75);
+    box-shadow:
+      0 0 0 5px var(--color-ivory),
+      0 0 0 6px rgb(196 154 72 / 0.55),
+      var(--shadow-card);
+  }
+
+  .card-surface {
+    @apply rounded-[1.75rem] border border-gold/30 bg-ivory/90;
+    box-shadow: var(--shadow-card);
+  }
+}
+
+/* ───────────────────────── Falling petals ───────────────────────── */
+.petal {
+  position: absolute;
+  top: -8%;
+  will-change: transform, opacity;
+  animation-name: petal-fall;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  pointer-events: none;
+}
+
+@keyframes petal-fall {
+  0% { transform: translate3d(0, 0, 0) rotate(0deg); opacity: 0; }
+  10% { opacity: 0.9; }
+  50% { transform: translate3d(40px, 55vh, 0) rotate(200deg); }
+  90% { opacity: 0.7; }
+  100% { transform: translate3d(-20px, 110vh, 0) rotate(380deg); opacity: 0; }
+}
+
+/* Safe area for bottom navigation on iPhones */
+.pb-safe {
+  padding-bottom: max(0.5rem, env(safe-area-inset-bottom));
+}
+
+/* ───────────────────────── Reduced motion ───────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  .petal,
+  .shimmer::after {
+    display: none;
+  }
+}
